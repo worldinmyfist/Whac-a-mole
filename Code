@@ -1,0 +1,136 @@
+int dur = 2;//Speed of the game; dur can be 1 or 2
+int difficult;
+int cnt = 0;//Final count
+void setup() {
+  
+pinMode(0,INPUT);//rnd
+pinMode(1,INPUT);//rnd
+pinMode(2,INPUT);//rnd
+pinMode(3,INPUT);//rnd
+pinMode(4,INPUT);//rnd
+pinMode(5,INPUT);//rnd
+
+
+pinMode(8,OUTPUT);//led0
+pinMode(9,OUTPUT);//led1
+pinMode(10,OUTPUT);//led2
+pinMode(11,OUTPUT);//led3
+pinMode(12,OUTPUT);//led4
+pinMode(13,OUTPUT);//led5
+digitalWrite(8,LOW);
+digitalWrite(9,LOW);
+digitalWrite(10,LOW);
+digitalWrite(11,LOW);
+digitalWrite(12,LOW);
+digitalWrite(13,LOW);
+cnt = 0;
+ 
+
+Serial.begin(9600);
+}
+int sum;
+
+
+void loop() {
+if(dur==1)
+{
+  difficult = 1000;
+}
+else
+{
+  difficult = 500;
+}
+  
+int stt,ett,t;
+  ett = millis();
+  while((millis()-ett)<32000)
+  {
+sum = rand()%100;
+sum=sum%6; 
+delay(100);
+if(sum==0){
+  digitalWrite(8,HIGH);
+  digitalWrite(9,LOW);
+  digitalWrite(10,LOW);
+  digitalWrite(11,LOW);
+  digitalWrite(12,LOW);
+  digitalWrite(13,LOW);
+  
+}  
+if(sum==1){
+  digitalWrite(8,LOW);
+  digitalWrite(9,HIGH);
+  digitalWrite(10,LOW);
+  digitalWrite(11,LOW);
+  digitalWrite(12,LOW);
+  digitalWrite(13,LOW);
+}
+if(sum==2){
+digitalWrite(8,LOW);
+  digitalWrite(9,LOW);
+  digitalWrite(10,HIGH);
+  digitalWrite(11,LOW);
+  digitalWrite(12,LOW);
+  digitalWrite(13,LOW);
+}
+if(sum==3){
+  digitalWrite(8,LOW);
+  digitalWrite(9,LOW);
+  digitalWrite(10,LOW);
+  digitalWrite(11,HIGH);
+  digitalWrite(12,LOW);
+  digitalWrite(13,LOW);
+}
+if(sum==4){
+  digitalWrite(8,LOW);
+  digitalWrite(9,LOW);
+  digitalWrite(10,LOW);
+  digitalWrite(11,LOW);
+  digitalWrite(12,HIGH);
+  digitalWrite(13,LOW);
+}
+if(sum==5){
+  digitalWrite(8,LOW);
+  digitalWrite(9,LOW);
+  digitalWrite(10,LOW);
+  digitalWrite(11,LOW);
+  digitalWrite(12,LOW);
+  digitalWrite(13,HIGH);
+}
+int flag = 0;
+t  = millis();
+while(abs(millis()-t)<difficult)
+{
+int l0 = digitalRead(0);
+int l1 = digitalRead(1);
+int l2 = digitalRead(2);
+int l3 = digitalRead(3);
+int l4 = digitalRead(4);
+int l5 = digitalRead(5);
+  if( sum==0 && l0==0 && l1==1 && l2==1 && l3==1 && l4 ==1 && l5==1|| sum==1 && l0==1 && l1==0 && l2==1 && l3==1 && l4 ==1 && l5==1|| sum==2 && l0==1 && l1==1 && l2==0 && l3==1 && l4 ==1 && l5==1|| sum==3 && l0==1 && l1==1 && l2==1 && l3==0 && l4 ==1 && l5==1|| sum==4 && l0==1 && l1==1 && l2==1 && l3==1 && l4 ==0 && l5==1|| sum==5 && l0==1 && l1==1 && l2==1 && l3==1 && l4 ==1 && l5==0)
+  {
+    flag = 1;
+    break;
+  }
+}
+if(flag==1)
+{
+  cnt++;
+}
+else
+{
+ if(dur==2)
+ {
+  cnt--;
+ }
+ 
+}
+Serial.println(cnt);  
+  
+}
+
+  while (1)
+  {}
+
+ 
+}
